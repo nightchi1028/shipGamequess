@@ -1,2 +1,2 @@
 # shipGamequess
-https://nightchi1028.github.io/shipGameguess/06.htm
+https://nightchi1028.github.io/shipGamequess/06.htm
