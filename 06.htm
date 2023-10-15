@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜船遊戲</title>
+    <link rel="stylesheet" href="07.css">
+</head>
+<body>
+
+    <input placeholder="請輸入可疑的船隻位置" id = 'myInput'>
+    <button onclick="qa()">輸入</button>
+    <table style="border-spacing:10px;">
+        <tr>
+        </tr>
+        <script>
+            
+            for (let j = 1;j<=48;j+=7){
+                document.write('<tr>')
+                for (let i = j; i <= j+6; i+=1) {
+                    let k = String(i).padStart(2, '0');
+                    document.write('<td id="C' + i + '">' + k + "</td>");
+                
+                }
+                document.write('</tr>')
+            }
+                
+        </script>
+    </table>
+    <script>
+        let i = 0; // 用于生成随机位置
+        let j = 0; // 用于生成随机位置
+        let shipA1 = 0; // 第一艘船的位置
+        let shipA2 = 0; // 第一艘船的位置
+        let shipA3 = 0; // 第一艘船的位置
+        let shipB1 = 0; // 第二艘船's位置
+        let shipB2 = 0; // 第二艘船's位置
+        let shipB3 = 0; // 第二艘船's位置
+        let shipC1 = 0; // 第三艘船's位置
+        let shipC2 = 0; // 第三艘船's位置
+        let shipC3 = 0; // 第三艘船's位置
+
+        // 生成随机整数函数
+        function randoz (){
+            const randI = Math.floor(Math.random() * 35) + 8;
+            return randI;
+        }
+
+        // 生成随机整数函数
+        function randoh (){
+            const randJ = Math.floor(Math.random() * (5)) +2+ 7*(Math.floor(Math.random()*7));
+            return randJ;
+        }
+
+        // 随机确定第一艘船's位置
+        if (Math.floor(Math.random()*10) > 5){
+            shipA1 = randoz();
+            shipA2 = shipA1 + 7;
+            shipA3 = shipA1 - 7;
+        }else{
+            shipA1 = randoh();
+            shipA2 = shipA1 + 1;
+            shipA3 = shipA1 - 1;
+        }
+        const ary = [shipA1, shipA2, shipA3]; // 存储船的位置信息
+
+        // 随机确定第二艘船's位置，确保与第一艘不重叠
+        if (Math.floor(Math.random()*10) > 5){
+            do {
+                shipB1 = randoz();
+                shipB2 = shipB1 + 7;
+                shipB3 = shipB1 - 7;
+            } while (ary.indexOf(shipB1) != -1 || ary.indexOf(shipB2) != -1 || ary.indexOf(shipB3) != -1);
+        }else{
+            do {
+                shipB1 = randoh();
+                shipB2 = shipB1 + 1;
+                shipB3 = shipB1 - 1;
+            } while (ary.indexOf(shipB1) != -1 || ary.indexOf(shipB2) != -1 || ary.indexOf(shipB3) != -1);
+        }
+        ary.push(shipB1);
+        ary.push(shipB2);
+        ary.push(shipB3);
+
+        // 随机确定第三艘船's位置，确保与前两艘不重叠
+        if (Math.floor(Math.random()*10) > 5){
+            do {
+                shipC1 = randoz();
+                shipC2 = shipC1 + 7;
+                shipC3 = shipC1 - 7;
+            } while (ary.indexOf(shipC1) != -1 || ary.indexOf(shipC2) != -1 || ary.indexOf(shipC3) != -1);
+        }else{
+            do {
+                shipC1 = randoh();
+                shipC2 = shipC1 + 1;
+                shipC3 = shipC1 - 1;
+            } while (ary.indexOf(shipC1) != -1 || ary.indexOf(shipC2) != -1 || ary.indexOf(shipC3) != -1);
+        }
+        ary.push(shipC1);
+        ary.push(shipC2);
+        ary.push(shipC3);
+
+        console.log(ary); // 打印船的位置信息
+
+        let timecount = 0; // 击中次数计数
+        let timequess = 0; // 猜测次数计数
+        const havequess = []; // 存储已猜测的数字
+    </script>
+
+    
+
+
+    <script>
+
+
+        // 游戏猜测函数
+        function qa () {
+                let x = document.getElementById("myInput").value;
+                document.getElementById("myInput").value = ''
+                const qu = parseInt(x, 10); // 将输入解析为整数
+                timequess += 1; // 猜测次数加1
+                console.log(qu);
+                if (!isNaN(qu) && qu >= 0 && qu < 50) { // 验证输入是否为有效数字
+                    if (havequess.indexOf(qu) == -1) {
+                        if (ary.indexOf(qu) != -1) {
+                            document.getElementById('C'+qu).innerHTML = 'O';
+                            document.getElementById('C'+qu).id = 'OO';
+                            alert('答對了'); // 如果猜测正确，显示提示
+                            timecount += 1; // 击中次数加1
+                            havequess.push(qu); // 将猜测的数字添加到已猜测列表中
+                            
+                            if (timecount > 8) {
+                            alert("全部擊沉了"); // 如果击中次数达到9，显示游戏胜利提示
+                            
+                            }
+                        } else {
+                            document.getElementById('C'+qu).innerHTML = 'X';
+                            document.getElementById('C'+qu).id = 'XX';
+                            alert("猜錯了"); // 如果猜测错误，显示提示
+                            
+                        }
+                        
+                    }else {
+                        alert('ANSWER過了歐'); // 如果数字已经猜过，显示提示
+                        
+                    }
+                
+                }else{alert('要在1~49內歐'); }
+            
+        }
+    
+    </script>
+
+</body>
+</html>

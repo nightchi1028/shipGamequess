@@ -1,0 +1,32 @@
+td {
+    color: rgb(255, 204, 102);
+    font-size: 2em;
+    border: 10px solid rgb(199, 16, 181);
+    font-weight: bold;
+    margin: 10px;
+}
+body {
+    
+    background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
+}
+button {
+    font-size: 2em;
+    background-color: #88aac1;
+}
+button:active {
+    border-radius: 50px;
+    background-color: #2471a3;
+}
+button:hover {
+    border-radius: 60px;
+    background-color: #7c9bb0;
+}
+#OO {
+    background-color: #ffd900;
+}
+#XX {
+    background-color: #ff0000;
+}
+#myInput{
+    font-size: 2em;
+}
